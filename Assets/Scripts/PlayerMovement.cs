@@ -22,8 +22,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		Vector3 targetPos = camera.transform.position + new Vector3(0,-20f, 150f);
-		transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, 0.1f);
+		transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(0,-10f, 150f), 0.1f);
 	}
 
 	void Update () {
@@ -42,8 +41,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	void RotateCamera()
 	{
-		float mouseX = Input.GetAxis("Mouse X"); //Input.mousePosition.x;
-		float mouseY = Input.GetAxis("Mouse Y"); //Input.mousePosition.y;
+		float mouseX = Input.GetAxis("Mouse X"); 
+		float mouseY = Input.GetAxis("Mouse Y"); 
 		
 		float verticalMultiplier = 0;
 		float horizontalMultiplier = 0;
@@ -58,11 +57,9 @@ public class PlayerMovement : MonoBehaviour {
 		if(mouseX < -0.3)
 			horizontalMultiplier = -1;
 
-		float cameraVerticalRotation = verticalMultiplier * CameraRotationSpeed;
-		float cameraHorizontalRotation = horizontalMultiplier * CameraRotationSpeed;
+		verticalMultiplier *= CameraRotationSpeed;
+		horizontalMultiplier *= CameraRotationSpeed;
 
-		camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, Quaternion.Euler(camera.transform.eulerAngles.x + cameraVerticalRotation,camera.transform.eulerAngles.y + cameraHorizontalRotation,0f), CameraRotationSpeed * Time.deltaTime);
-
-		//camera.transform.Rotate(cameraVerticalRotation,cameraHorizontalRotation,0f);
+		camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation, Quaternion.Euler(camera.transform.eulerAngles.x + verticalMultiplier,camera.transform.eulerAngles.y + horizontalMultiplier,0f), CameraRotationSpeed * Time.deltaTime);
 	}
 }
