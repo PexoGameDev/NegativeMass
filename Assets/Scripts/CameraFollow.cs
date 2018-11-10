@@ -16,7 +16,7 @@ public class CameraFollow : MonoBehaviour {
 		if(Vector3.Distance(player.transform.position,transform.position) > maxDeltaDistance)
 		{
 			Vector3 targetPos = player.transform.position + offset;
-			transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, 0.1f);
+			
 		}
 	}
 }
